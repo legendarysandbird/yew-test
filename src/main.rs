@@ -28,8 +28,12 @@ impl Component for Model {
                 true
             }
             Msg::SubOne => {
-                self.value -= 1;
-                true
+                if self.value > 0 {
+                    self.value -= 1;
+                    return true;
+                }
+
+                false
             }
         }
     }
@@ -39,11 +43,16 @@ impl Component for Model {
         // etc to the component
         let link = ctx.link();
         html! {
-            <div>
-                <button onclick={link.callback(|_| Msg::AddOne)}>{ "+1" }</button>
-                <button onclick={link.callback(|_| Msg::SubOne)}>{ "-1" }</button>
-                <p>{ self.value }</p>
-            </div>
+            <body>
+                <div>
+                    <h1> {"Brandon's Amazing Website v1."} {self.value} </h1>
+                    <p> {"I can do a lot in Yew. Pretty cool, huh?"} </p>
+                </div>
+                <div>
+                    <button onclick={link.callback(|_| Msg::AddOne)}>{ "+1" }</button>
+                    <button onclick={link.callback(|_| Msg::SubOne)}>{ "-1" }</button>
+                </div>
+            </body>
         }
     }
 }
